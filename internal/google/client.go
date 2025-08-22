@@ -101,13 +101,14 @@ func (c *client) GetGroupMembers(g *admin.Group) ([]*admin.Member, error) {
 // * https://developers.google.com/admin-sdk/directory/reference/rest/v1/users/list
 // * https://developers.google.com/admin-sdk/directory/v1/guides/search-users
 // query possible values:
-// '' --> empty or not defined
-//  name:'Jane'
-//  email:admin*
-//  isAdmin=true
-//  manager='janesmith@example.com'
-//  orgName=Engineering orgTitle:Manager
-//  EmploymentData.projects:'GeneGnomes'
+// ” --> empty or not defined
+//
+//	name:'Jane'
+//	email:admin*
+//	isAdmin=true
+//	manager='janesmith@example.com'
+//	orgName=Engineering orgTitle:Manager
+//	EmploymentData.projects:'GeneGnomes'
 func (c *client) GetUsers(query string, filter string) ([]*admin.User, error) {
 	u := make([]*admin.User, 0)
 	var err error
@@ -133,7 +134,7 @@ func (c *client) GetUsers(query string, filter string) ([]*admin.User, error) {
 
 		// Then call the api one query at a time, appending to our list
 		for _, subQuery := range queries {
-			err = c.service.Users.List().Query(subQuery + filter).Customer("my_customer").Pages(c.ctx, func(users *admin.Users) error {
+			err = c.service.Users.List().Query(subQuery+filter).Customer("my_customer").Pages(c.ctx, func(users *admin.Users) error {
 				if err != nil {
 					return err
 				}
